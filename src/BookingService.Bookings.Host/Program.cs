@@ -1,2 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿var host = new HostBuilderFactory<Startup>()
+    .CreateHostBuilder(args)
+    .Build();
+
+await host.RunAsync();
+
+  

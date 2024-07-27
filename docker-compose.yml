@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: src/BookingService.Bookings.Host/Dockerfile
-
+ 
 
   booking-service_catalog-migrations:
     container_name: catalog-migrations
