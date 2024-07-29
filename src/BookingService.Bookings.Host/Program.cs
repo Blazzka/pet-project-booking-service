@@ -3,5 +3,3 @@
     .Build();
 
 await host.RunAsync();
-
-  

@@ -1,6 +1,6 @@
 ﻿namespace BookingService.Bookings.AppServices
 {
-    public class test
+    public class AppServices
     {
 
     }
