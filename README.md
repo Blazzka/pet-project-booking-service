@@ -1,1 +1,1 @@
-# pet-project-booking
+# pet-project-booking-service
