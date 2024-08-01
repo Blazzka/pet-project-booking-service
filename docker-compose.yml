@@ -28,7 +28,7 @@ services:
     ports:
     - "8001:8080"
     environment:
-      DOTNET_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Production
 
   booking-service_catalog-migrations:
     container_name: catalog-migrations

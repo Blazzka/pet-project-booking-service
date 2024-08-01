@@ -9,7 +9,6 @@ public class Startup
     Configuration = configuration;
   }
 
-
   public void ConfigureServices(IServiceCollection services)
   { 
     services.AddControllers();

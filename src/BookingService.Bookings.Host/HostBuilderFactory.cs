@@ -1,6 +1,5 @@
 ﻿using Serilog;
 
-
 public class HostBuilderFactory<TStartup> where TStartup : class
 {
     public IHostBuilder CreateHostBuilder(string[] args, string? baseDirectory = null)
