@@ -2,7 +2,8 @@
 
 public class HostBuilderFactory<TStartup> where TStartup : class
 {
-    public IHostBuilder CreateHostBuilder(string[] args, string? baseDirectory = null)
+	#nullable enable
+	public IHostBuilder CreateHostBuilder(string[] args, string? baseDirectory = null)
     {
         var builder = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((_, configurationBuilder) =>

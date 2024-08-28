@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BookingService.Bookings.Domain\BookingService.Bookings.Domain.csproj" />
-    <ProjectReference Include="..\BookingService.Bookings.Api.Contracts\BookingService.Bookings.Api.Contracts.csproj" />
-    <ProjectReference Include="..\BookingService.Bookings.AppServices\BookingService.Bookings.AppServices.csproj" />
+    <ProjectReference Include="..\BookingService.Booking.Api.Contracts\BookingService.Booking.Api.Contracts.csproj" />
+    <ProjectReference Include="..\BookingService.Booking.AppServices\BookingService.Booking.AppServices.csproj" />
+    <ProjectReference Include="..\BookingService.Booking.Domain\BookingService.Booking.Domain.csproj" />
   </ItemGroup>
 
 </Project>
