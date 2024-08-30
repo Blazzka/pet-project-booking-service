@@ -23,31 +23,31 @@ public class BookingController : ControllerBase
 	[HttpPost]
 	public Task<long> Create([FromBody] CreateBookingRequest request, CancellationToken cancellationToken = default)
 	{
-		return _bookingsService.Create(request.Id, request.ResourceId, request.StartDate, request.EndDate);
+		return _bookingsService.Create(request.Id, request.ResourceId, request.StartDate, request.EndDate, cancellationToken);
 	}
 
 	[HttpGet(WebRoutes.Booking.GetById)]
 	public Task<BookingData> GetBooking([FromRoute] long id, CancellationToken cancellationToken = default)
 	{
-		return _bookingsService.GetById(id);
+		return _bookingsService.GetById(id, cancellationToken);
 	}
 
 	[HttpPost(WebRoutes.Booking.GetByFilter)]
 	public Task<BookingData[]> GetBookings([FromBody] GetBookingsByFilterRequest request, CancellationToken cancellationToken = default)
 	{
-		return _bookingsQueries.GetByFilter(request.UserId, request.RecourceId, request.PageNumber, request.PageSize);
+		return _bookingsQueries.GetByFilter(request.UserId, request.RecourceId, request.PageNumber, request.PageSize, cancellationToken);
 	}
 
 	[HttpGet(WebRoutes.Booking.GetStatusById)]
 	public Task<BookingStatus> GetStatus([FromRoute] long id, CancellationToken cancellationToken = default)
 	{
-		return _bookingsQueries.GetStatusById(id);
+		return _bookingsQueries.GetStatusById(id, cancellationToken);
 	}
 
 	[HttpPost($"{WebRoutes.Booking.Cancel}")]
 	public Task Cancel(long id, CancellationToken cancellationToken = default)
 	{
-		return _bookingsService.Cancel(id);
+		return _bookingsService.Cancel(id, cancellationToken);
 	}
 }
 
