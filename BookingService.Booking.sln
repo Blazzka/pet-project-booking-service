@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Bookings.Api.Contracts", "src\BookingService.Bookings.Api.Contracts\BookingService.Bookings.Api.Contracts.csproj", "{96F6DE73-F98D-4D71-9801-157B0360DE5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingService.Booking.Api.Contracts", "src\BookingService.Booking.Api.Contracts\BookingService.Booking.Api.Contracts.csproj", "{96F6DE73-F98D-4D71-9801-157B0360DE5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Bookings.AppServices", "src\BookingService.Bookings.AppServices\BookingService.Bookings.AppServices.csproj", "{76D7CF90-B49D-401E-9DC6-2469D3999E6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingService.Booking.AppServices", "src\BookingService.Booking.AppServices\BookingService.Booking.AppServices.csproj", "{76D7CF90-B49D-401E-9DC6-2469D3999E6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Bookings.Host", "src\BookingService.Bookings.Host\BookingService.Bookings.Host.csproj", "{7CBE0B5F-8D80-4099-AFB8-B98AF56661D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingService.Booking.Host", "src\BookingService.Booking.Host\BookingService.Booking.Host.csproj", "{7CBE0B5F-8D80-4099-AFB8-B98AF56661D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingService.Booking.Domain", "src\BookingService.Booking.Domain\BookingService.Booking.Domain.csproj", "{A8C02D6C-72F5-491A-B325-39E29B90F363}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7CBE0B5F-8D80-4099-AFB8-B98AF56661D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CBE0B5F-8D80-4099-AFB8-B98AF56661D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CBE0B5F-8D80-4099-AFB8-B98AF56661D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8C02D6C-72F5-491A-B325-39E29B90F363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8C02D6C-72F5-491A-B325-39E29B90F363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8C02D6C-72F5-491A-B325-39E29B90F363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8C02D6C-72F5-491A-B325-39E29B90F363}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
