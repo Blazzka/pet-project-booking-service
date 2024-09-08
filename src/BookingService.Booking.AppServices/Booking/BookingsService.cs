@@ -1,6 +1,6 @@
 ﻿using BookingService.Booking.Api.Contracts.Booking.Dtos;
-using BookingService.Booking.Domain;
 using BookingService.Booking.AppServices.Exceptions;
+using BookingService.Booking.Domain.Exceptions;
 
 namespace BookingService.Booking.AppServices.Booking;
 

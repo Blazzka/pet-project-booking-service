@@ -1,6 +1,6 @@
 ﻿using BookingService.Booking.AppServices.Booking;
 using BookingService.Booking.AppServices.Exceptions;
-using BookingService.Booking.Domain;
+using BookingService.Booking.Domain.Exceptions;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 
