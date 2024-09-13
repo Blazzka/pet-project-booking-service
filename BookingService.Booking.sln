@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingService.Booking.Doma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingService.Booking.Domain.Contracts", "src\BookingService.Booking.Domain.Contracts\BookingService.Booking.Domain.Contracts.csproj", "{99ED3D97-E707-444D-826D-13492AB87428}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Domain.UnitTests", "TestProject1\BookingService.Booking.Domain.UnitTests.csproj", "{1DC52788-A3BD-4094-82EB-E38B80357525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingService.Booking.Domain.UnitTests", "tests\BookingService.Booking.Domain.UnitTests\BookingService.Booking.Domain.UnitTests.csproj", "{1E6EFFFE-D4BF-432A-858D-E786B8C0299E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +45,10 @@ Global
 		{99ED3D97-E707-444D-826D-13492AB87428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99ED3D97-E707-444D-826D-13492AB87428}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99ED3D97-E707-444D-826D-13492AB87428}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DC52788-A3BD-4094-82EB-E38B80357525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DC52788-A3BD-4094-82EB-E38B80357525}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DC52788-A3BD-4094-82EB-E38B80357525}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DC52788-A3BD-4094-82EB-E38B80357525}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6EFFFE-D4BF-432A-858D-E786B8C0299E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6EFFFE-D4BF-432A-858D-E786B8C0299E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6EFFFE-D4BF-432A-858D-E786B8C0299E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6EFFFE-D4BF-432A-858D-E786B8C0299E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,7 +56,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5105C6A2-423F-4D1B-B3FF-5CA7D547E6D0} = {55BC57A7-9CDA-4105-A044-AD2E1DA7AA09}
 		{99ED3D97-E707-444D-826D-13492AB87428} = {55BC57A7-9CDA-4105-A044-AD2E1DA7AA09}
-		{1DC52788-A3BD-4094-82EB-E38B80357525} = {1502DDBB-51DF-4EEB-A30A-601B8C01A271}
+		{1E6EFFFE-D4BF-432A-858D-E786B8C0299E} = {1502DDBB-51DF-4EEB-A30A-601B8C01A271}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08444172-E693-41DB-830C-48C998E06965}

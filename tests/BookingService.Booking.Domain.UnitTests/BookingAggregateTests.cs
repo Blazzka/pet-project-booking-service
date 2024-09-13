@@ -12,8 +12,8 @@ public class BookingAggregateTests
 	private readonly BookingStatus _status;
 	private readonly long UserId = 1;
 	private const long ResourceId = 1;
-	private readonly DateOnly _bookedFrom = new(2024, 9, 10);
-	private readonly DateOnly _bookedTo = new(2024, 9, 12);
+	private readonly DateOnly _bookedFrom = new(2024, 10, 10);
+	private readonly DateOnly _bookedTo = new(2024, 10, 12);
 	private readonly DateTimeOffset _createdAt = DateTimeOffset.Now;
 
 	[Fact]
