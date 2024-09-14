@@ -3,7 +3,7 @@
 public class BookingData
 {
 	public long Id { get; set; }
-	public BookingStatus OrderStatus { get; set; }
+	public BookingStatus BookingStatus { get; set; }
 	public long UserId { get; set; }
 	public long ResourceId { get; set; }
 	public DateOnly BookedFrom { get; set; }
