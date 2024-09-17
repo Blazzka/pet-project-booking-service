@@ -2,7 +2,7 @@
 
 public class DefaultCurrentDateTimeProvider : ICurrentDateTimeProvider
 {
-    public DateTimeOffset Now => DateTimeOffset.Now.ToLocalTime();
+  public DateTimeOffset Now => DateTimeOffset.Now.ToLocalTime();
 
-    public DateTimeOffset UtcNow => DateTimeOffset.UtcNow;
+  public DateTimeOffset UtcNow => DateTimeOffset.UtcNow;
 }

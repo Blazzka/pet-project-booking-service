@@ -9,14 +9,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
 
-RUN dotnet restore "./src/BookingService.Bookings.Host/BookingService.Bookings.Host.csproj"
-WORKDIR "/src/src/BookingService.Bookings.Host"
-RUN dotnet build "./BookingService.Bookings.Host.csproj" -c Release -o /app/build
+RUN dotnet restore "./src/BookingService.Booking.Host/BookingService.Booking.Host.csproj"
+WORKDIR "/src/src/BookingService.Booking.Host"
+RUN dotnet build "./BookingService.Booking.Host.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./BookingService.Bookings.Host.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./BookingService.Booking.Host.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BookingService.Bookings.Host.dll"]
+ENTRYPOINT ["dotnet", "BookingService.Booking.Host.dll"]

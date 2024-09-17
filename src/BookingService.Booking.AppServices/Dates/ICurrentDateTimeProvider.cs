@@ -3,12 +3,12 @@
 internal interface ICurrentDateTimeProvider
 {
 	/// <summary>
-	///     Локальное время
+	///   Локальное время
 	/// </summary>
 	public DateTimeOffset Now { get; }
 
 	/// <summary>
-	///     Время в UTC
+	///   Время в UTC
 	/// </summary>
 	public DateTimeOffset UtcNow { get; }
 }

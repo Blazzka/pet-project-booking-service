@@ -6,7 +6,8 @@ namespace BookingService.Booking.AppServices.Booking;
 
 public class BookingsService : IBookingsService
 {
-	public Task<long> Create(long id, long resourceId, DateOnly startDate, DateOnly endDate, CancellationToken cancellationToken = default)
+	public Task<long> Create(long id, long resourceId, DateOnly startDate, DateOnly endDate,
+		CancellationToken cancellationToken = default)
 	{
 		throw new ValidationException("Произошла ошибка валидации");
 	}

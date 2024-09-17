@@ -1,6 +1,7 @@
 ﻿using BookingService.Booking.AppServices.Booking;
 using BookingService.Booking.AppServices.Exceptions;
 using BookingService.Booking.Domain.Exceptions;
+using BookingService.Booking.Persistence;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,6 +48,7 @@ public class Startup
 			});
 		});
 	}
+
 
 	public void Configure(IApplicationBuilder app)
 	{
