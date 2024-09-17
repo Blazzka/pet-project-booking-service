@@ -1,9 +1,11 @@
 ﻿using Serilog;
 
+namespace BookingService.Booking.Host;
+
 public class HostBuilderFactory<TStartup> where TStartup : class
 {
-	#nullable enable
-	public IHostBuilder CreateHostBuilder(string[] args, string? baseDirectory = null)
+#nullable enable
+    public IHostBuilder CreateHostBuilder(string[] args, string? baseDirectory = null)
     {
         var builder = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((_, configurationBuilder) =>

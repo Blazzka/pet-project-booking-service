@@ -11,8 +11,8 @@ namespace BookingService.Booking.Host.Controllers;
 [Route(WebRoutes.Booking.Path)]
 public class BookingController : ControllerBase
 {
-	private IBookingsService _bookingsService;
-	private IBookingsQueries _bookingsQueries;
+	private readonly IBookingsService _bookingsService;
+	private readonly IBookingsQueries _bookingsQueries;
 
 	public BookingController(IBookingsService bookingsService, IBookingsQueries bookingsQueries)
 	{
@@ -23,7 +23,8 @@ public class BookingController : ControllerBase
 	[HttpPost]
 	public Task<long> Create([FromBody] CreateBookingRequest request, CancellationToken cancellationToken = default)
 	{
-		return _bookingsService.Create(request.Id, request.ResourceId, request.StartDate, request.EndDate, cancellationToken);
+		return _bookingsService.Create(request.Id, request.ResourceId, request.StartDate, request.EndDate,
+			cancellationToken);
 	}
 
 	[HttpGet(WebRoutes.Booking.GetById)]
@@ -33,9 +34,11 @@ public class BookingController : ControllerBase
 	}
 
 	[HttpPost(WebRoutes.Booking.GetByFilter)]
-	public Task<BookingData[]> GetBookings([FromBody] GetBookingsByFilterRequest request, CancellationToken cancellationToken = default)
+	public Task<BookingData[]> GetBookings([FromBody] GetBookingsByFilterRequest request,
+		CancellationToken cancellationToken = default)
 	{
-		return _bookingsQueries.GetByFilter(request.UserId, request.RecourceId, request.PageNumber, request.PageSize, cancellationToken);
+		return _bookingsQueries.GetByFilter(request.UserId, request.ResourceId, request.PageNumber, request.PageSize,
+			cancellationToken);
 	}
 
 	[HttpGet(WebRoutes.Booking.GetStatusById)]
