@@ -1,24 +1,24 @@
 version: "3.0"
 
 services:
-  booking-service_catalog-host:
-    container_name: catalog-host
-    image: ghcr.io/nazarovsa/pet-booking-service-catalog/catalog-host:2.0.0
-    platform: linux/amd64
-    ports:
-      - "8000:8080"
-    volumes:
-      - ./docker-compose-mount/BookingService.Catalog.Host/appsettings.json:/app/appsettings.json
-      - ./docker-compose-mount/BookingService.Catalog.Host/appsettings.Production.json:/app/appsettings.Production.json
-    environment:
-      ASPNETCORE_ENVIRONMENT: Production
-    depends_on:
-      booking-service_booking-db:
-        condition: service_healthy
+#  booking-service_catalog-host:
+#    container_name: catalog-host
+#    image: ghcr.io/nazarovsa/pet-booking-service-catalog/catalog-host:2.0.0
+#    platform: linux/amd64
+#    ports:
+#      - "8000:8080"
+#    volumes:
+#      - ./docker-compose-mount/BookingService.Catalog.Host/appsettings.json:/app/appsettings.json
+#      - ./docker-compose-mount/BookingService.Catalog.Host/appsettings.Production.json:/app/appsettings.Production.json
+#    environment:
+#      ASPNETCORE_ENVIRONMENT: Production
+#    depends_on:
+#      booking-service_catalog-db:
+#        condition: service_healthy
 #      booking-service_catalog-migrations:
 #        condition: service_completed_successfully
-      booking-service_rabbitmq:
-        condition: service_healthy
+#      booking-service_rabbitmq:
+#        condition: service_healthy
 
   booking-service_booking-host:
     container_name: bookings-host
@@ -29,6 +29,13 @@ services:
     - "8001:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+        booking-service_booking-db:
+          condition: service_healthy
+#        booking-service_catalog-migrations:
+#          condition: service_completed_successfully
+        booking-service_rabbitmq:
+          condition: service_healthy
 
 #  booking-service_catalog-migrations:
 #    container_name: catalog-migrations
