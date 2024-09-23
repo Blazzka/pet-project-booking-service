@@ -12,7 +12,9 @@ public class BookingAggregate
 	public DateOnly BookedFrom { get; }
 	public DateOnly BookedTo { get; }
 	public DateTimeOffset CreatedAt { get; }
-	private BookingAggregate(long id, long userId, long resourceId, DateOnly bookedFrom, DateOnly bookedTo, DateTimeOffset createdAt)
+
+	private BookingAggregate(long id, long userId, long resourceId, DateOnly bookedFrom, DateOnly bookedTo,
+		DateTimeOffset createdAt)
 	{
 		Id = id;
 		Status = BookingStatus.AwaitConfirmation;
@@ -22,44 +24,35 @@ public class BookingAggregate
 		BookedTo = bookedTo;
 		CreatedAt = createdAt;
 	}
-	public static BookingAggregate Initialize(long id, long userId, long recourceId, DateOnly bookedFrom, DateOnly bookedTo, DateTimeOffset createdAt)
+
+	public static BookingAggregate Initialize(long id, long userId, long resourceId, DateOnly bookedFrom,
+		DateOnly bookedTo, DateTimeOffset createdAt)
 	{
 		if (id < 0)
-		{
 			throw new DomainException($"Некорректный идентификатор {id}");
-		}
 		if (userId <= 0)
-		{
 			throw new DomainException($"Некорректный идентификатор пользователя {userId}");
-		}
-		if (recourceId <= 0)
-		{
+		if (resourceId <= 0)
 			throw new DomainException($"Некорректный идентификатор ресурса {userId}");
-		}
 		if (bookedFrom <= DateOnly.FromDateTime(createdAt.Date))
-		{
 			throw new DomainException("Дата начала бронирования должна быть больше текущей даты");
-		}
 		if (bookedTo < bookedFrom)
-		{
 			throw new DomainException("Выбранная дата окончания бронирования раньше даты начала бронирования");
-		}
 		if (createdAt.Date != DateTimeOffset.UtcNow.Date)
-		{
 			throw new DomainException("Дата создания бронирования должна быть равна текущему времени");
-		}
 
-		return new BookingAggregate(id, userId, recourceId, bookedFrom, bookedTo, createdAt);
+		return new BookingAggregate(id, userId, resourceId, bookedFrom, bookedTo, createdAt);
 	}
+
 	public void Confirm()
 	{
 		if (Status != BookingStatus.AwaitConfirmation)
-		{
-			throw new DomainException($"Статус заявки некорректен, заявка должна быть в статусе {BookingStatus.AwaitConfirmation}");
-		}
+			throw new DomainException(
+				$"Статус заявки некорректен, заявка должна быть в статусе {BookingStatus.AwaitConfirmation}");
 
 		Status = BookingStatus.Confirmed;
 	}
+
 	public void Cancel(DateOnly currentDate)
 	{
 		switch (Status)
@@ -72,6 +65,8 @@ public class BookingAggregate
 				return;
 			case BookingStatus.Confirmed:
 				throw new DomainException("Невозможно отменить начавшееся бронирование");
+			case BookingStatus.None:
+			case BookingStatus.Cancelled:
 			default:
 				throw new DomainException("Некорректный статус для отмены");
 		}
