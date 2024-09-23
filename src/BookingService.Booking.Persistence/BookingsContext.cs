@@ -8,8 +8,8 @@ public class BookingsContext : DbContext
 {
 	public BookingsContext(DbContextOptions<BookingsContext> options) : base(options)
 	{
-		// Инициализация
 	}
+
 	public DbSet<BookingAggregate> Bookings { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
