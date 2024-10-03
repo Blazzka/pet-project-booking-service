@@ -1,7 +1,7 @@
 ﻿using BookingService.Booking.Domain.Contracts.Bookings;
 using BookingService.Booking.Domain.Exceptions;
 
-namespace BookingService.Booking.Domain.Booking;
+namespace BookingService.Booking.Domain.Bookings;
 
 public class BookingAggregate
 {
@@ -13,10 +13,9 @@ public class BookingAggregate
 	public DateOnly BookedTo { get; }
 	public DateTimeOffset CreatedAt { get; }
 
-	private BookingAggregate(long id, long userId, long resourceId, DateOnly bookedFrom, DateOnly bookedTo,
+	private BookingAggregate(long userId, long resourceId, DateOnly bookedFrom, DateOnly bookedTo,
 		DateTimeOffset createdAt)
 	{
-		Id = id;
 		Status = BookingStatus.AwaitConfirmation;
 		UserId = userId;
 		ResourceId = resourceId;
@@ -25,8 +24,8 @@ public class BookingAggregate
 		CreatedAt = createdAt;
 	}
 
-	public static BookingAggregate Initialize(long id, long userId, long resourceId, DateOnly bookedFrom,
-		DateOnly bookedTo, DateTimeOffset createdAt)
+	public static BookingAggregate Initialize(long userId, long resourceId, DateOnly bookedFrom,
+		DateOnly bookedTo, DateTimeOffset createdAt, long id = 1)
 	{
 		if (id < 0)
 			throw new DomainException($"Некорректный идентификатор {id}");
@@ -41,7 +40,7 @@ public class BookingAggregate
 		if (createdAt.Date != DateTimeOffset.UtcNow.Date)
 			throw new DomainException("Дата создания бронирования должна быть равна текущему времени");
 
-		return new BookingAggregate(id, userId, resourceId, bookedFrom, bookedTo, createdAt);
+		return new BookingAggregate(userId, resourceId, bookedFrom, bookedTo, createdAt);
 	}
 
 	public void Confirm()

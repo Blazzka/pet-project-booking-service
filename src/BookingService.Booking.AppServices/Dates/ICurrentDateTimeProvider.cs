@@ -1,6 +1,6 @@
 ﻿namespace BookingService.Booking.AppServices.Dates;
 
-internal interface ICurrentDateTimeProvider
+public interface ICurrentDateTimeProvider
 {
 	/// <summary>
 	///   Локальное время
