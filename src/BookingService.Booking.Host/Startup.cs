@@ -21,7 +21,6 @@ public class Startup
 		var connectionString = Configuration.GetConnectionString("BookingsContext");
 		
 		services.AddControllers();
-		// Почему то ругается connectionString с замечанием "possible "null" assignment to non nullable entity" наверно как то не правильно получил строку?
 		services.AddPersistence(connectionString!);
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
