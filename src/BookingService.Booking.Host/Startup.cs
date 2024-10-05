@@ -1,4 +1,4 @@
-﻿using BookingService.Booking.AppServices.Booking;
+﻿using BookingService.Booking.AppServices.Bookings;
 using BookingService.Booking.AppServices.Exceptions;
 using BookingService.Booking.Domain.Exceptions;
 using BookingService.Booking.Persistence;
@@ -9,7 +9,7 @@ namespace BookingService.Booking.Host;
 
 public class Startup
 {
-	public IConfiguration Configuration { get; }
+	private IConfiguration Configuration { get; }
 
 	public Startup(IConfiguration configuration)
 	{
@@ -18,8 +18,10 @@ public class Startup
 
 	public void ConfigureServices(IServiceCollection services)
 	{
+		var connectionString = Configuration.GetConnectionString("BookingsContext");
+		
 		services.AddControllers();
-
+		services.AddPersistence(connectionString!);
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
 		services.AddAppServices();

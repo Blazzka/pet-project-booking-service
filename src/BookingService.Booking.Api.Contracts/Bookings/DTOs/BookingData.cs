@@ -1,8 +1,8 @@
 ﻿using BookingService.Booking.Domain.Contracts.Bookings;
 
-namespace BookingService.Booking.Api.Contracts.Booking.Dtos;
+namespace BookingService.Booking.Api.Contracts.Bookings.DTOs;
 
-public abstract class BookingData
+public class BookingData
 {
   public long Id { get; set; }
   public BookingStatus BookingStatus { get; set; }

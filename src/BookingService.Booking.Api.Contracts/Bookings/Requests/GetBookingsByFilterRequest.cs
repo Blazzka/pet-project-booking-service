@@ -1,4 +1,4 @@
-﻿namespace BookingService.Booking.Api.Contracts.Booking.Requests;
+﻿namespace BookingService.Booking.Api.Contracts.Bookings.Requests;
 
 public record GetBookingsByFilterRequest(
   long? UserId = null,

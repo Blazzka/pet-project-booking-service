@@ -1,8 +1,9 @@
 ﻿using BookingService.Booking.Api.Contracts;
+using BookingService.Booking.Api.Contracts.Bookings.DTOs;
+using BookingService.Booking.Api.Contracts.Bookings.Requests;
+using BookingService.Booking.AppServices.Bookings;
 using BookingService.Booking.Domain.Contracts.Bookings;
-using BookingService.Booking.Api.Contracts.Booking.Dtos;
-using BookingService.Booking.Api.Contracts.Booking.Requests;
-using BookingService.Booking.AppServices.Booking;
+using BookingService.Booking.AppServices.Contracts.Bookings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Booking.Host.Controllers;
@@ -23,7 +24,7 @@ public class BookingController : ControllerBase
   [HttpPost]
   public Task<long> Create([FromBody] CreateBookingRequest request, CancellationToken cancellationToken = default)
   {
-    return _bookingsService.Create(request.Id, request.ResourceId, request.StartDate, request.EndDate,
+    return _bookingsService.Create(request.Id, request.UserId, request.ResourceId, request.StartDate, request.EndDate,
       cancellationToken);
   }
 
@@ -42,7 +43,7 @@ public class BookingController : ControllerBase
   }
 
   [HttpGet(WebRoutes.Booking.GetStatusById)]
-  public Task<BookingStatus> GetStatus([FromRoute] long id, CancellationToken cancellationToken = default)
+  public Task<BookingStatus?> GetStatus([FromRoute] long id, CancellationToken cancellationToken = default)
   {
     return _bookingsQueries.GetStatusById(id, cancellationToken);
   }
