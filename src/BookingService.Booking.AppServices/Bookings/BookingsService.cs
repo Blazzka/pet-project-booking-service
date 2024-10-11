@@ -17,7 +17,7 @@ public class BookingsService : IBookingsService
 		_dateTimeProvider = dateTimeProvider;
 	}
 
-	public async Task<long> Create(long id, long userId, long resourceId, DateOnly startDate, DateOnly endDate,
+	public async Task<long> Create(long userId, long resourceId, DateOnly startDate, DateOnly endDate,
 		CancellationToken cancellationToken = default)
 	{
 		var booking = BookingAggregate.Initialize(userId, resourceId, startDate, endDate, _dateTimeProvider.UtcNow);
@@ -26,36 +26,34 @@ public class BookingsService : IBookingsService
 		return booking.Id;
 	}
 
-	public async Task<BookingData> GetById(long id, CancellationToken cancellationToken = default)
+	public async Task<BookingData?> GetById(long id, CancellationToken cancellationToken = default)
 	{
 		var booking = await GetBookingById(id, cancellationToken);
-		return new BookingData()
+		return new BookingData
 		{
-			Id = booking.Id, 
-			BookingStatus =	booking.Status,
+			Id = booking.Id,
+			BookingStatus = booking.Status,
 			UserId = booking.UserId,
 			ResourceId = booking.ResourceId,
 			BookedFrom = booking.BookedFrom,
 			BookedTo = booking.BookedTo,
-			CreatedAt =	booking.CreatedAt,
+			CreatedAt = booking.CreatedAt
 		};
 	}
 
 	public async Task Cancel(long id, CancellationToken cancellationToken = default)
 	{
 		var booking = await GetBookingById(id, cancellationToken);
+		if (booking == null) throw new ValidationException($"Бронирование с указанным id: '{id}' не найдено.");
 		booking.Cancel(DateOnly.FromDateTime(_dateTimeProvider.UtcNow.DateTime));
-		_unitOfWork.BookingsRepository.Update(booking!);
+		_unitOfWork.BookingsRepository.Update(booking);
 		await _unitOfWork.CommitAsync(cancellationToken);
 	}
+
 	private async Task<BookingAggregate> GetBookingById(long id, CancellationToken cancellationToken)
 	{
 		var booking = await _unitOfWork.BookingsRepository.GetById(id, cancellationToken);
-		if (booking == null)
-		{
-			throw new ValidationException($"Бронирование с указанным {id} не найдено.");
-		}
+		if (booking == null) throw new ValidationException($"Бронирование с указанным id: '{id}' не найдено.");
 		return booking;
 	}
 }
-

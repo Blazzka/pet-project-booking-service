@@ -18,13 +18,22 @@ public class BookingsQueries : IBookingsQueries
 		int pageSize = 25, CancellationToken cancellationToken = default)
 	{
 		var aggregate = _db.Bookings.AsNoTracking();
-		if (userId != null) aggregate = aggregate.Where(x => x.UserId == userId);
-
-		if (resourceId != null) aggregate = aggregate.Where(x => x.ResourceId == resourceId);
-
+		if (userId != null) aggregate = aggregate.Where(b => b.UserId == userId);
+	
+		if (resourceId != null) aggregate = aggregate.Where(b => b.ResourceId == resourceId);
+	
 		aggregate = aggregate.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-
-		return await aggregate.Select(x => new BookingData()).ToArrayAsync(cancellationToken);
+	
+		return await aggregate.Select(b => new BookingData
+		{
+			Id = b.Id,
+			BookingStatus = b.Status,
+			UserId = b.UserId,
+			ResourceId = b.ResourceId,
+			BookedFrom = b.BookedFrom,
+			BookedTo = b.BookedTo,
+			CreatedAt = b.CreatedAt
+		}).ToArrayAsync(cancellationToken);
 	}
 
 	public async Task<BookingStatus?> GetStatusById(long id, CancellationToken cancellationToken = default)

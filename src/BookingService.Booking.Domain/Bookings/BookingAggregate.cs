@@ -25,10 +25,8 @@ public class BookingAggregate
 	}
 
 	public static BookingAggregate Initialize(long userId, long resourceId, DateOnly bookedFrom,
-		DateOnly bookedTo, DateTimeOffset createdAt, long id = 1)
+		DateOnly bookedTo, DateTimeOffset createdAt)
 	{
-		if (id < 0)
-			throw new DomainException($"Некорректный идентификатор {id}");
 		if (userId <= 0)
 			throw new DomainException($"Некорректный идентификатор пользователя {userId}");
 		if (resourceId <= 0)
