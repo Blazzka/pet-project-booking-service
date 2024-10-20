@@ -24,7 +24,7 @@ public class BookingController : ControllerBase
 	[HttpPost]
 	public Task<long> Create([FromBody] CreateBookingRequest request, CancellationToken cancellationToken = default)
 	{
-		return _bookingsService.Create(request.UserId, request.ResourceId, request.StartDate, request.EndDate,
+		return _bookingsService.Create(request.UserId, request.ResourceId, request.BookedFrom, request.BookedTo,
 			cancellationToken);
 	}
 

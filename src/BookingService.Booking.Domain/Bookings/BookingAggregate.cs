@@ -5,6 +5,7 @@ namespace BookingService.Booking.Domain.Bookings;
 
 public class BookingAggregate
 {
+	public Guid? CatalogRequestId { get; private set; }
 	public long Id { get; set; }
 	public BookingStatus Status { get; private set; }
 	public long UserId { get; }
@@ -24,6 +25,14 @@ public class BookingAggregate
 		CreatedAt = createdAt;
 	}
 
+	public void SetCatalogRequestId(Guid catalogRequestId)
+	{
+		if (CatalogRequestId != null) throw new DomainException($"Guid уже имеет значение: {CatalogRequestId}");
+
+		if (CatalogRequestId == default) throw new DomainException($"Guid не инициилизирован: {CatalogRequestId}");
+		CatalogRequestId = catalogRequestId;
+	}
+	
 	public static BookingAggregate Initialize(long userId, long resourceId, DateOnly bookedFrom,
 		DateOnly bookedTo, DateTimeOffset createdAt)
 	{

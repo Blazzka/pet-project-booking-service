@@ -24,11 +24,14 @@ public class BookingAggregateConfiguration : IEntityTypeConfiguration<BookingAgg
 
 		builder.Property(x => x.BookedFrom)
 			.HasColumnName("booked_from");
-
+		
 		builder.Property(x => x.BookedTo)
 			.HasColumnName("booked_to");
-
+		
 		builder.Property(x => x.CreatedAt)
 			.HasColumnName("created_at");
+		
+		builder.HasKey(x => x.CatalogRequestId)
+			.HasName("Guid");
 	}
 }
