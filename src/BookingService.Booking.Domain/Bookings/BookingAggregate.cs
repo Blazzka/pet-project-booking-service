@@ -27,9 +27,9 @@ public class BookingAggregate
 
 	public void SetCatalogRequestId(Guid catalogRequestId)
 	{
-		if (CatalogRequestId != null) throw new DomainException($"Guid уже имеет значение: {CatalogRequestId}");
+		if (CatalogRequestId != null) throw new DomainException($"catalog_request_id уже имеет значение: {CatalogRequestId}");
 
-		if (CatalogRequestId == default) throw new DomainException($"Guid не инициилизирован: {CatalogRequestId}");
+		if (CatalogRequestId == default) throw new DomainException($"catalog_request_id не инициилизирован: {CatalogRequestId}");
 		CatalogRequestId = catalogRequestId;
 	}
 	

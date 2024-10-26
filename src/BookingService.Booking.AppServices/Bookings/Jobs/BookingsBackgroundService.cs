@@ -23,18 +23,18 @@ public class BookingsBackgroundService : BackgroundService
 			{
 				var handler = scope.ServiceProvider.GetRequiredService<IBookingsBackgroundServiceHandler>();
 
+				_logger.LogInformation("Служба BookingsBackgroundService запущена.");
 				try
 				{
-					_logger.LogInformation("Служба BookingsBackgroundService запущена.");
 					await handler.Handle(stoppingToken);
 					await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
-					_logger.LogInformation("Служба BookingsBackgroundService остановлена.");
 				}
 				catch (Exception ex)
 				{
 					_logger.LogError(ex, "Возникла ошибка при выполнении BookingsBackgroundService.");
 					await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
 				}
+				_logger.LogInformation("Служба BookingsBackgroundService остановлена.");
 			}
 	}
 }

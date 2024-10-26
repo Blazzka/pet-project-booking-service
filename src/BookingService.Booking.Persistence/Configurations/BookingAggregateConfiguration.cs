@@ -32,6 +32,6 @@ public class BookingAggregateConfiguration : IEntityTypeConfiguration<BookingAgg
 			.HasColumnName("created_at");
 		
 		builder.HasKey(x => x.CatalogRequestId)
-			.HasName("Guid");
+			.HasName("catalog_request_id");
 	}
 }

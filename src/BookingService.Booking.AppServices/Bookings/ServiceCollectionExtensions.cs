@@ -1,8 +1,6 @@
 ﻿using BookingService.Booking.AppServices.Bookings.Jobs;
 using BookingService.Booking.AppServices.Dates;
 using BookingService.Booking.AppServices.Options;
-using BookingService.Booking.Domain.Bookings;
-using BookingService.Booking.Persistence;
 using BookingService.Catalog.Api.Contracts.BookingJobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +16,6 @@ public static class ServiceCollectionExtensions
     services.AddScoped<IBookingsService, BookingsService>();
     services.AddSingleton<ICurrentDateTimeProvider, DefaultCurrentDateTimeProvider>();
     services.Configure<BookingCatalogRestOptions>(configuration.GetSection(nameof(BookingCatalogRestOptions)));
-    services.Configure<BaseAddressAttribute>(configuration.GetSection("BaseAddress"));
     services.AddHttpClient(nameof(BookingCatalogRestOptions),
       (ctx, client) =>
       {
@@ -30,7 +27,6 @@ public static class ServiceCollectionExtensions
       RestClient.For<IBookingJobsController>(ctx.GetRequiredService<IHttpClientFactory>()
         .CreateClient(nameof(BookingCatalogRestOptions))));
     services.AddHostedService<BookingsBackgroundService>();
-    services.AddScoped<IBookingsBackgroundQueries, BookingsBackgroundQueries>();
     services.AddScoped<IBookingsBackgroundServiceHandler, BookingsBackgroundServiceHandler>();
   }
 }

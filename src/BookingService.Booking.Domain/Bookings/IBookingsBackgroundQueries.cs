@@ -2,5 +2,5 @@
 
 public interface IBookingsBackgroundQueries
 {
-	IReadOnlyCollection<BookingAggregate> GetConfirmationAwaitingBookings(int count = 10);
+	Task<IReadOnlyCollection<BookingAggregate>> GetConfirmationAwaitingBookings(int count = 10);
 }

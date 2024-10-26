@@ -33,10 +33,10 @@ public class BookingsBackgroundServiceHandler : IBookingsBackgroundServiceHandle
 
 	public async Task Handle(CancellationToken cancellationToken = default)
 	{
-		var bookings = _bookingsBackgroundQueries.GetConfirmationAwaitingBookings();
+		var bookings = await _bookingsBackgroundQueries.GetConfirmationAwaitingBookings();
 		foreach (var booking in bookings)
 		{
-			if (booking.Status != (BookingStatus)1)
+			if (booking.Status != BookingStatus.AwaitConfirmation)
 			{
 				_logger.LogWarning($"Некорректное состояние агрегата BookingId: {booking.Id}");
 				continue;
@@ -63,9 +63,8 @@ public class BookingsBackgroundServiceHandler : IBookingsBackgroundServiceHandle
 						$"Бронирование с Id: {booking.Id} имеет статус необработанного бронирования: {bookingJobStatus}.");
 					break;
 			}
-
 			_unitOfWork.BookingsRepository.Update(booking);
-			await _unitOfWork.CommitAsync(cancellationToken);
 		}
+		await _unitOfWork.CommitAsync(cancellationToken);
 	}
 }

@@ -59,8 +59,8 @@ public class BookingsService : IBookingsService
 
 	public async Task Cancel(long id, CancellationToken cancellationToken = default)
 	{
-		var booking = await GetBookingById(id, cancellationToken)
-		              ?? throw new ValidationException($"Бронирование с указанным id: '{id}' не найдено.");
+		var booking = await GetBookingById(id, cancellationToken);
+		if (booking == null) throw new ValidationException($"Бронирование с указанным id: '{id}' не найдено.");
 		if (booking.CatalogRequestId != null)
 			await _bookingJobsController.CancelBookingJob(
 				new CancelBookingJobByRequestIdCommand { RequestId = booking.CatalogRequestId.Value },

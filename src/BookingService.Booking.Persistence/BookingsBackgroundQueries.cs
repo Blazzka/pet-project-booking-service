@@ -1,5 +1,6 @@
 ﻿using BookingService.Booking.Domain.Bookings;
 using BookingService.Booking.Domain.Contracts.Bookings;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Booking.Persistence;
 
@@ -12,13 +13,13 @@ public class BookingsBackgroundQueries : IBookingsBackgroundQueries
 		_context = context;
 	}
 
-	public IReadOnlyCollection<BookingAggregate> GetConfirmationAwaitingBookings(int count = 10)
+	public async Task<IReadOnlyCollection<BookingAggregate>> GetConfirmationAwaitingBookings(int count = 10)
 	{
-		var bookings = _context.Bookings
-			.Where(b => b.Status == (BookingStatus)1)
-			.OrderByDescending(b => b.Id)
+		var bookings = await _context.Bookings
+			.Where(b => b.Status == BookingStatus.AwaitConfirmation)
+			.OrderBy(b => b.Id)
 			.Take(count)
-			.ToList();
+			.ToListAsync();
 
 		return bookings.AsReadOnly();
 	}
