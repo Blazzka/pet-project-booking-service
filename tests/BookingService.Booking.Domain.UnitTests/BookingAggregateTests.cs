@@ -30,10 +30,10 @@ public class BookingAggregateTests
   [Fact]
   public void Initialize_invalid_parameters_should_throw_DE()
   {
-    var _bookedFrom = new DateOnly(2024, 10, 12);
-    var _bookedTo = new DateOnly(2024, 10, 10);
+    var bookedFrom = new DateOnly(2024, 10, 12);
+    var bookedTo = new DateOnly(2024, 10, 10);
     Assert.Throws<DomainException>(() =>
-      BookingAggregate.Initialize(_userId, _resourceId, _bookedFrom, _bookedTo, _createdAt));
+      BookingAggregate.Initialize(_userId, _resourceId, bookedFrom, bookedTo, _createdAt));
   }
 
   [Fact]

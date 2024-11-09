@@ -19,12 +19,12 @@ public class Startup
 	public void ConfigureServices(IServiceCollection services)
 	{
 		var connectionString = Configuration.GetConnectionString("BookingsContext");
-		
+
 		services.AddControllers();
 		services.AddPersistence(connectionString!);
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
-		services.AddAppServices();
+		services.AddAppServices(Configuration);
 		services.AddProblemDetails(options =>
 		{
 			// Если окружение Development, включаем подробное описание ошибки в ответ.
