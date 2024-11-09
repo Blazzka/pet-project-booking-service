@@ -29,7 +29,7 @@ public class BookingAggregate
 	{
 		if (CatalogRequestId != null) throw new DomainException($"CatalogRequestId уже имеет значение: {CatalogRequestId}");
 
-		if (CatalogRequestId == default) throw new DomainException($"CatalogRequestId не инициилизирован: {CatalogRequestId}");
+		if (catalogRequestId == default) throw new DomainException($"CatalogRequestId не инициилизирован: {CatalogRequestId}");
 		CatalogRequestId = catalogRequestId;
 	}
 	

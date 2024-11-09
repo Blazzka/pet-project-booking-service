@@ -3,23 +3,22 @@ using BookingService.Booking.AppServices.Dates;
 using BookingService.Booking.AppServices.Exceptions;
 using BookingService.Booking.Domain;
 using BookingService.Booking.Domain.Bookings;
-using BookingService.Catalog.Api.Contracts.BookingJobs;
-using BookingService.Catalog.Api.Contracts.BookingJobs.Commands;
+using BookingService.Catalog.Async.Api.Contracts.Requests;
+using Rebus.Bus;
 
 namespace BookingService.Booking.AppServices.Bookings;
 
 public class BookingsService : IBookingsService
 {
+	private readonly IBus _bus;
 	private readonly ICurrentDateTimeProvider _dateTimeProvider;
 	private readonly IUnitOfWork _unitOfWork;
-	private readonly IBookingJobsController _bookingJobsController;
 
-	public BookingsService(IUnitOfWork unitOfWork, ICurrentDateTimeProvider dateTimeProvider,
-		IBookingJobsController bookingJobsController)
+	public BookingsService(IBus bus, IUnitOfWork unitOfWork, ICurrentDateTimeProvider dateTimeProvider)
 	{
+		_bus = bus;
 		_unitOfWork = unitOfWork;
 		_dateTimeProvider = dateTimeProvider;
-		_bookingJobsController = bookingJobsController;
 	}
 
 	public async Task<long> Create(long userId, long resourceId, DateOnly bookedFrom, DateOnly bookedTo,
@@ -28,17 +27,19 @@ public class BookingsService : IBookingsService
 		var booking = BookingAggregate.Initialize(userId, resourceId, bookedFrom, bookedTo, _dateTimeProvider.UtcNow);
 		var requestId = Guid.NewGuid();
 		booking.SetCatalogRequestId(requestId);
+		_unitOfWork.BookingsRepository.Create(booking);
+		await _unitOfWork.CommitAsync(cancellationToken);
 
-		var command = new CreateBookingJobCommand
+		var request = new CreateBookingJobRequest
 		{
+			EventId = Guid.NewGuid(),
 			RequestId = requestId,
 			ResourceId = booking.ResourceId,
 			StartDate = booking.BookedFrom,
 			EndDate = booking.BookedTo
 		};
-		_unitOfWork.BookingsRepository.Create(booking);
-		await _unitOfWork.CommitAsync(cancellationToken);
-		await _bookingJobsController.CreateBookingJob(command, cancellationToken);
+		await _bus.Publish(request);
+
 		return booking.Id;
 	}
 
@@ -62,10 +63,15 @@ public class BookingsService : IBookingsService
 		var booking = await GetBookingById(id, cancellationToken);
 		if (booking == null) throw new ValidationException($"Бронирование с указанным id: '{id}' не найдено.");
 		if (booking.CatalogRequestId != null)
-			await _bookingJobsController.CancelBookingJob(
-				new CancelBookingJobByRequestIdCommand { RequestId = booking.CatalogRequestId.Value },
-				cancellationToken
-			);
+		{
+			var request = new CancelBookingJobByRequestIdRequest
+			{
+				EventId = Guid.NewGuid(),
+				RequestId = booking.CatalogRequestId.Value
+			};
+			await _bus.Publish(request);
+		}
+
 		booking.Cancel(DateOnly.FromDateTime(_dateTimeProvider.UtcNow.DateTime));
 		_unitOfWork.BookingsRepository.Update(booking);
 		await _unitOfWork.CommitAsync(cancellationToken);

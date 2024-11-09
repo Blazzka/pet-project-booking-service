@@ -2,5 +2,5 @@
 
 public interface IBookingsBackgroundQueries
 {
-	Task<IReadOnlyCollection<BookingAggregate>> GetConfirmationAwaitingBookings(int count = 10);
+	Task<BookingAggregate?> GetBookingByRequestId(Guid requestId, CancellationToken cancellationToken = default);
 }

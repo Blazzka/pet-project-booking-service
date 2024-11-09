@@ -2,8 +2,14 @@
 using BookingService.Booking.AppServices.Exceptions;
 using BookingService.Booking.Domain.Exceptions;
 using BookingService.Booking.Persistence;
+using BookingService.Catalog.Async.Api.Contracts.Events;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Rebus.Bus;
+using Rebus.Config;
+using Rebus.Routing.TypeBased;
+using Rebus.Serialization.Json;
 
 namespace BookingService.Booking.Host;
 
@@ -25,6 +31,16 @@ public class Startup
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
 		services.AddAppServices(Configuration);
+		services.Configure<RebusRabbitMqOptions>(Configuration.GetSection("RebusRabbitMqOptions"));
+		services.AddRebus((builder, ctx) =>
+			builder.Transport(t =>
+					t.UseRabbitMq(ctx.GetRequiredService<IOptions<RebusRabbitMqOptions>>().Value.ConnectionString,
+							"booking-service_bookings-queue")
+						.DefaultQueueOptions(queue => queue.SetDurable(true))
+						.ExchangeNames("booking-service_booking-direct", "booking-service_catalog-topics"))
+				.Serialization(s => s.UseSystemTextJson())
+				.Logging(l => l.Serilog())
+				.Routing(r => r.TypeBased()));
 		services.AddProblemDetails(options =>
 		{
 			// Если окружение Development, включаем подробное описание ошибки в ответ.
@@ -59,5 +75,7 @@ public class Startup
 		app.UseProblemDetails();
 		app.UseRouting();
 		app.UseEndpoints(builder => builder.MapControllers());
+		app.ApplicationServices.GetRequiredService<IBus>().Subscribe<BookingJobConfirmed>();
+		app.ApplicationServices.GetRequiredService<IBus>().Subscribe<BookingJobDenied>();
 	}
 }
