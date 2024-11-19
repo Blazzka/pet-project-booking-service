@@ -1,7 +1,5 @@
 ﻿using BookingService.Booking.AppServices.Dates;
 using BookingService.Booking.AppServices.EventHandlers;
-using BookingService.Booking.Domain.Bookings;
-using BookingService.Booking.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rebus.Config;
@@ -14,7 +12,6 @@ public static class ServiceCollectionExtensions
 	{
 		services.AddScoped<IBookingsService, BookingsService>();
 		services.AddSingleton<ICurrentDateTimeProvider, DefaultCurrentDateTimeProvider>();
-		services.AddScoped<IBookingsBackgroundQueries, BookingsBackgroundQueries>();
 		// Регистрация обработчиков Rebus
 		services.AddRebusHandler<BookingJobConfirmedEventHandler>();
 		services.AddRebusHandler<BookingJobDeniedEventHandler>();

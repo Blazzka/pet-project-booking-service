@@ -31,7 +31,6 @@ public class Startup
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
 		services.AddAppServices(Configuration);
-		services.Configure<RebusRabbitMqOptions>(Configuration.GetSection("RebusRabbitMqOptions"));
 		services.AddRebus((builder, ctx) =>
 			builder.Transport(t =>
 					t.UseRabbitMq(ctx.GetRequiredService<IOptions<RebusRabbitMqOptions>>().Value.ConnectionString,
@@ -41,6 +40,7 @@ public class Startup
 				.Serialization(s => s.UseSystemTextJson())
 				.Logging(l => l.Serilog())
 				.Routing(r => r.TypeBased()));
+		services.Configure<RebusRabbitMqOptions>(Configuration.GetSection("RebusRabbitMqOptions"));
 		services.AddProblemDetails(options =>
 		{
 			// Если окружение Development, включаем подробное описание ошибки в ответ.
@@ -74,8 +74,8 @@ public class Startup
 		app.UseSwaggerUI();
 		app.UseProblemDetails();
 		app.UseRouting();
-		app.UseEndpoints(builder => builder.MapControllers());
 		app.ApplicationServices.GetRequiredService<IBus>().Subscribe<BookingJobConfirmed>();
 		app.ApplicationServices.GetRequiredService<IBus>().Subscribe<BookingJobDenied>();
+		app.UseEndpoints(builder => builder.MapControllers());
 	}
 }

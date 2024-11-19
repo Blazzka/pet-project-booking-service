@@ -4,6 +4,7 @@ using BookingService.Booking.AppServices.Exceptions;
 using BookingService.Booking.Domain;
 using BookingService.Booking.Domain.Bookings;
 using BookingService.Catalog.Async.Api.Contracts.Requests;
+using Microsoft.Extensions.Logging;
 using Rebus.Bus;
 
 namespace BookingService.Booking.AppServices.Bookings;
@@ -13,12 +14,14 @@ public class BookingsService : IBookingsService
 	private readonly IBus _bus;
 	private readonly ICurrentDateTimeProvider _dateTimeProvider;
 	private readonly IUnitOfWork _unitOfWork;
+	private readonly ILogger<BookingsService> _logger;
 
-	public BookingsService(IBus bus, IUnitOfWork unitOfWork, ICurrentDateTimeProvider dateTimeProvider)
+	public BookingsService(IBus bus, IUnitOfWork unitOfWork, ICurrentDateTimeProvider dateTimeProvider, ILogger<BookingsService> logger)
 	{
 		_bus = bus;
 		_unitOfWork = unitOfWork;
 		_dateTimeProvider = dateTimeProvider;
+		_logger = logger;
 	}
 
 	public async Task<long> Create(long userId, long resourceId, DateOnly bookedFrom, DateOnly bookedTo,
@@ -38,8 +41,14 @@ public class BookingsService : IBookingsService
 			StartDate = booking.BookedFrom,
 			EndDate = booking.BookedTo
 		};
+		var headers = new Dictionary<string, string>
+		{
+			{ "rbs2-content-type", "application/json" }
+		};
+		
+		_logger.LogDebug("Отправка сообщения CreateBookingJobRequest с заголовками: {Headers}", headers);
 		await _bus.Publish(request);
-
+				
 		return booking.Id;
 	}
 
