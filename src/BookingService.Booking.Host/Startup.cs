@@ -34,9 +34,9 @@ public class Startup
 		services.AddRebus((builder, ctx) =>
 			builder.Transport(t =>
 					t.UseRabbitMq(ctx.GetRequiredService<IOptions<RebusRabbitMqOptions>>().Value.ConnectionString,
-							"booking-service_bookings-queue")
+							"booking-service-bookings-queue")
 						.DefaultQueueOptions(queue => queue.SetDurable(true))
-						.ExchangeNames("booking-service_booking-direct", "booking-service_catalog-topics"))
+						.ExchangeNames("booking-service-booking-direct", "booking-service-topics"))
 				.Serialization(s => s.UseSystemTextJson())
 				.Logging(l => l.Serilog())
 				.Routing(r => r.TypeBased()));
