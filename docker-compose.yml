@@ -32,24 +32,9 @@ services:
       timeout: 10s
       retries: 5
   
-  booking-service_rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 5s
-      timeout: 10s
-      retries: 3
-      
   booking-service_catalog-host:
     container_name: catalog-host
-    image: ghcr.io/nazarovsa/pet-booking-service-catalog/catalog-host:2.0.0
+    image: ghcr.io/nazarovsa-mentorship/pet-booking-service-catalog/catalog-host:2.1.2
     platform: linux/amd64
     ports:
       - "8000:8080"
@@ -64,18 +49,18 @@ services:
       booking-service_catalog-migrations:
         condition: service_completed_successfully
       booking-service_rabbitmq:
-        condition: service_healthy    
-      
+        condition: service_healthy
+
   booking-service_catalog-migrations:
     container_name: catalog-migrations
-    image: ghcr.io/nazarovsa/pet-booking-service-catalog/catalog-migrations:2.0.0
+    image: ghcr.io/nazarovsa-mentorship/pet-booking-service-catalog/catalog-migrations:2.1.2
     platform: linux/amd64
     environment:
       DOTNET_ENVIRONMENT: Production
     depends_on:
       booking-service_catalog-db:
         condition: service_healthy
- 
+  
   booking-service_catalog-db:
     image: postgres:latest
     container_name: catalog-db
@@ -91,3 +76,18 @@ services:
       interval: 5s
       timeout: 10s
       retries: 5
+  
+  booking-service_rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 10s
+      retries: 3

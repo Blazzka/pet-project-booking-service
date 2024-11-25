@@ -31,7 +31,7 @@ public class BookingAggregateConfiguration : IEntityTypeConfiguration<BookingAgg
 		builder.Property(x => x.CreatedAt)
 			.HasColumnName("created_at");
 		
-		builder.HasKey(x => x.CatalogRequestId)
-			.HasName("catalog_request_id");
+		builder.Property(x => x.CatalogRequestId)
+			.HasColumnName("catalog_request_id");
 	}
 }
